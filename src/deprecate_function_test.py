@@ -4,11 +4,11 @@ It shows as well, how to test such deprecation.
 
 Supported IDE's:
 
-    Name 				Version		Supported
+    Name                Version     Supported
     -----------------------------------------
     Atom                3.40.0      No
-    PyCharm				2019.3		Yes
-    Sublime Text		3.2.2		No
+    PyCharm             2019.3      Yes
+    Sublime Text        3.2.2       No
 
 """
 from warnings import catch_warnings, warn

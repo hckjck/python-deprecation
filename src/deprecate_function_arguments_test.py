@@ -6,11 +6,11 @@ where you want to deprecate a parameter or for example the support of an argumen
 
 Supported IDE's:
 
-    Name 				Version		Supported
+    Name                Version     Supported
     -----------------------------------------
     Atom                3.40.0      No
-    PyCharm				2019.3		No
-    Sublime Text		3.2.2		No
+    PyCharm             2019.3      No
+    Sublime Text        3.2.2       No
 
 """
 from warnings import catch_warnings, warn
