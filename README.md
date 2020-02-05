@@ -76,18 +76,25 @@ Class method deprecation basicaly follows the same rules as [function deprecatio
 
 [Full example](./src/deprecate_class_method_test.py)
 
-```python
-
-```
-
-[Full example](./src/deprecate_class_method_test.py)
-
 ### Deprecating class variables
 
-
+In order to deperecate class variables, you need to hook into `__getattribute__` method of objects metaclass.
 
 ```python
+from warnings import warn
 
+class DeprecatedMetaclass(type):
+
+    def __getattribute__(self, item):
+        if 'a_deprecated_class_variable' == item:
+            warn(f'`{item}` class variable is deprecated')
+
+        return type.__getattribute__(self, item)
+
+
+class AClass(object, metaclass=DeprecatedMetaclass):
+    a_class_variable = 'foo'
+    a_deprecated_class_variable = None  # deprecated
 ```
 
 [Full example](./src/deprecate_class_variables_test.py)
