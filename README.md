@@ -101,10 +101,23 @@ class AClass(object, metaclass=DeprecatedMetaclass):
 
 ### Deprecating enum values
 
-
+Due to the fact that enum values will be class variables of a subclass of Enum, the deprecation follows the same approach as [deprecating class variables](#Deprecating class variables) does.
 
 ```python
+from enum import EnumMeta, Enum
+from warnings import warn
 
+class ADeprecatedEnumMeta(EnumMeta):
+
+    def __getattribute__(self, item):
+        if item == 'BAR':
+            warn('BAR is going to be deprecated')
+        return EnumMeta.__getattribute__(self, item)
+
+
+class ADeprecatedEnum(Enum, metaclass=ADeprecatedEnumMeta):
+    FOO = 'foo'
+    BAR = 'bar'
 ```
 
 [Full example](./src/deprecate_enum_value_test.py)
