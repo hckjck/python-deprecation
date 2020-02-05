@@ -4,7 +4,9 @@ As soon as you are developing a library, SDK or any other piece of code which is
 
 The following document shows how to use deprecation in Python for different scenarios and parts of your code.
 
-Under `./src` directory you are going to find examples including tests, showing how to deprecate and test your deprecations. By running, you can explore how it would behave at runtime. By opening it in your favourite IDE, you are able to check whether your IDE is supporting you by giving any hints when using deprecated stuff.
+## How to use?
+
+Under `./src` directory you are going to find examples including tests, showing how to deprecate and test your deprecations. By running them you can explore how it would behave at runtime. By opening it in your favourite IDE, you are able to check whether your IDE is supporting you by giving any hints when using deprecated stuff. You can run all tests using pytest.
 
 ## Throwing deprecation warnings
 
@@ -14,9 +16,9 @@ In order to throw warnings you want to use Pythons built in [warning control](ht
 from warnings import warn
 ```````
 
-### Method deprecation
+### Function deprecation
 
-Deprecating a method is pretty easy just by using `warn` within a method like this.
+Deprecating a function is pretty easy just by using `warn` within a method like this.
 
 ```python
 from warnings import warn
@@ -27,11 +29,13 @@ def a_deprecated_function():
 
 [Full example](./src/deprecate_function_test.py)
 
-#### Deprecating method arguments
+#### Deprecating function arguments
 
 Deprecation on function arguments, requires you to check for your desired changes and throw `DeprecationWarning`'s withing the method.
 
 ```python
+from warnings import warn
+
 def a_function_with_deprecated_arguments(arg1, *args, kwarg1=None, **kwargs):
     # Positional argument `arg1` is going to change its type from (int, str) to (None, str)
     if type(arg1) is int:
@@ -49,6 +53,8 @@ def a_function_with_deprecated_arguments(arg1, *args, kwarg1=None, **kwargs):
 When deprecating classes you have to consider two seperate use cases. Instantiating an object of a deprecated class can throw a deprecation warning by overriding the `__init__` method. In order to throw a warning on subclassing from a deprected method, you have to override the `__init_sublcall__` method instead.
 
 ```python
+from warnings import warn
+
 class ADeprecatedClass(object):
   
     def __init_subclass__(cls, **kwargs):
