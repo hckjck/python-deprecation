@@ -72,7 +72,9 @@ class ADeprecatedClass(object):
 
 ### Deprecating a class method
 
+Class method deprecation basicaly follows the same rules as [function deprecation](#function deprecation).
 
+[Full example](./src/deprecate_class_method_test.py)
 
 ```python
 
