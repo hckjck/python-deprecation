@@ -146,6 +146,10 @@ class ADeprecatedEnum(Enum, metaclass=ADeprecatedEnumMeta):
 
 
 
+## Versioning deprecations
+
+*TODO*
+
 ## Documenting deprecations
 
 *TODO*
