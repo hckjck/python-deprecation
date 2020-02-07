@@ -48,7 +48,7 @@ def a_function_with_deprecated_arguments(arg1, *args, kwarg1=None, **kwargs):
 
 [Full example](./src/deprecate_function_arguments_test.py)
 
-## Class deprecation
+### Class deprecation
 
 When deprecating classes you have to consider two seperate use cases. Instantiating an object of a deprecated class can throw a deprecation warning by overriding the `__init__` method. In order to throw a warning on subclassing from a deprected method, you have to override the `__init_sublcall__` method instead.
 
@@ -70,13 +70,13 @@ class ADeprecatedClass(object):
 
 [Full example](./src/deprecate_class_test.py)
 
-### Deprecating a class method
+#### Deprecating a class method
 
 Class method deprecation basicaly follows the same rules as [function deprecation](#function deprecation).
 
 [Full example](./src/deprecate_class_method_test.py)
 
-### Deprecating class variables
+#### Deprecating class variables
 
 In order to deperecate class variables, you need to hook into `__getattribute__` method of objects metaclass.
 
@@ -99,7 +99,7 @@ class AClass(object, metaclass=DeprecatedMetaclass):
 
 [Full example](./src/deprecate_class_variables_test.py)
 
-### Deprecating enum values
+#### Deprecating enum values
 
 Due to the fact that enum values will be class variables of a subclass of Enum, the deprecation follows the same approach as [deprecating class variables](#Deprecating class variables) does. In contrast you have to return the `EnumMeta.__getattribute__` as a super call instead, as you are subclassing from `EnumMeta`.
 
@@ -122,7 +122,7 @@ class ADeprecatedEnum(Enum, metaclass=ADeprecatedEnumMeta):
 
 [Full example](./src/deprecate_enum_value_test.py)
 
-## Module deprecation
+### Module deprecation
 
 In order to deprecate a entire module just place a deprecation wraning at the top level of that module.
 
@@ -135,7 +135,7 @@ warn(f'The module {__name__} is deprecated.')
 
 [Full example](./src/deprecate_module_test.py)
 
-### Deprecating variables and constants on module level
+#### Deprecating variables and constants on module level
 
 *TODO*
 
@@ -145,7 +145,7 @@ warn(f'The module {__name__} is deprecated.')
 
 [Full example](./src/deprecate_module_variables_test.py)
 
-## Package deprecation
+### Package deprecation
 
 Package deprecation works the same way as [module deprecation](#Module deprecation), where the top level will be your `__init__.py` of the package to be deprecated.
 
@@ -217,4 +217,5 @@ Libaries
 How this project or document could be improved to provide even more?
 
 - by providing some more python background information, how python works and meta programming...?
+- Document `stacklevel=2` argument of `warnings.warn`
 
