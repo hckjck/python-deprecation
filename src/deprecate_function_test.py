@@ -25,8 +25,8 @@ def test_a_deprecated_function():
     with catch_warnings(record=True) as w:
         a_deprecated_function()
 
-    assert str(w[0].message) == 'This method is deprecated, use `a_function` instead.'
-    assert len(w) == 1
+        assert str(w[0].message) == 'This method is deprecated, use `a_function` instead.'
+        assert len(w) == 1
 
 
 if __name__ == '__main__':
