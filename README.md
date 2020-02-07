@@ -145,14 +145,27 @@ warn(f'The module {__name__} is deprecated.')
 
 [Full example](./src/deprecate_module_variables_test.py)
 
-### Testing deprecations
+## Testing deprecations
 
-
+Python's [warning control](https://docs.python.org/3.5/library/warnings.html) provides the method [catch_warnings](https://docs.python.org/3.5/library/warnings.html#warnings.catch_warnings) to collect warnings within a `with` block. Setting `record=True` enables you to record the warnings which were emittied during execution of your code and check if the desired warnings where raised as expected. We won't evalutate this in depth, due to it is well documentent in Python documentation [here](https://docs.python.org/3.5/library/warnings.html#testing-warnings).
 
 ```python
+from warnings import catch_warnings
+
+def test_a_deprecated_enum_value():
+    with catch_warnings(record=True) as w:
+      	# ADeprecatedEnum.FOO is not deprecated and should not throw any warning
+        ADeprecatedEnum.FOO
+        assert len(w) == 0
+
+        # ADeprecatedEnum.BAR is deprecated and we expect to have a warning raised.
+        ADeprecatedEnum.BAR
+        assert str(w[0].message) == 'BAR is going to be deprecated'
+        assert len(w) == 1
 
 ```
 
+Have a look under `./src` directory for more examples on testing.
 
 ## Package deprecation
 
