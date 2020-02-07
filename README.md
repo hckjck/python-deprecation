@@ -124,9 +124,16 @@ class ADeprecatedEnum(Enum, metaclass=ADeprecatedEnumMeta):
 
 ## Module deprecation
 
-*TODO*
+In order to deprecate a entire module just place a deprecation wraning at the top level of that module.
 
-### Deprecating variables and constants on module level
+```python
+# lib.py
+from warnings import warn
+
+warn(f'The module {__name__} is deprecated.')
+```
+
+[Full example](./src/deprecate_module_test.py)
 
 
 
