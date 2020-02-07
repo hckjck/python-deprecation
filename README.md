@@ -2,13 +2,15 @@
 
 As soon as you are developing a library, SDK or any other piece of code which is intended to be used by several people or software, you have to worry about how to introduce changes gracefully to your code over time.
 
-The following document shows how to use deprecation in Python for different scenarios and parts of your code.
+The following document shows how to use deprecation in Python for different scenarios and parts of your code. Besides of that it shows how to test deprecations and ensure its warnings will be raised when you expect them to raise. Also the the topic of versioning deprecations will be coverered, as well how to properly document them. Finally we want to evaluate how to maintain deprecations from depvelopers perspective over time efficiently. Last but not least we want to have a brief look on existing third party libraries covering the topic of deprecation.
 
 ## How to use this project?
 
-Under `./src` directory you are going to find examples including tests, showing how to deprecate and test your deprecations. By running them via `python deprecate_<example>_test.py` you can explore how it would behave at runtime. By opening it in your favourite IDE, you are able to check whether your IDE is supporting you by giving any hints when using deprecated stuff. You can run all tests using pytest by simply `pytest .`.
+Under [`./src`](./src) directory you are going to find examples including tests, showing how to deprecate and test your deprecations. By running them via `python deprecate_<example>_test.py` you can explore how it would behave at runtime. By opening it in your favourite IDE, you are able to check whether your IDE is supporting you by giving any hints when using deprecated stuff. You can run all tests using pytest by simply `pytest .`.
 
 ## Throwing deprecation warnings
+
+The following section shows how to use deprecation warning in python in different parts of your code.
 
 In order to throw warnings you want to use Python's built in [warning control](https://docs.python.org/3/library/warnings.html).
 
@@ -153,7 +155,7 @@ Package deprecation works the same way as [module deprecation](#Module deprecati
 
 ## Testing deprecations
 
-Python's [warning control](https://docs.python.org/3.5/library/warnings.html) provides the method [catch_warnings](https://docs.python.org/3.5/library/warnings.html#warnings.catch_warnings) to collect warnings within a `with` block. Setting `record=True` enables you to record the warnings which were emittied during execution of your code and check if the desired warnings where raised as expected. We won't evalutate this in depth, due to it is well documentent in Python documentation [here](https://docs.python.org/3.5/library/warnings.html#testing-warnings).
+Python's [warning control](https://docs.python.org/3.5/library/warnings.html) provides a method called [catch_warnings](https://docs.python.org/3.5/library/warnings.html#warnings.catch_warnings) to collect warnings within a `with` block. Setting `record=True` enables you to record the warnings which were emittied during execution of your code and check if the desired warnings where raised as expected. We won't evalutate this in depth, due to it is well documentent in Python documentation [here](https://docs.python.org/3.5/library/warnings.html#testing-warnings).
 
 ```python
 from warnings import catch_warnings
@@ -166,12 +168,13 @@ def test_a_deprecated_enum_value():
 
         # ADeprecatedEnum.BAR is deprecated and we expect to have a warning raised.
         ADeprecatedEnum.BAR
-        assert str(w[0].message) == 'BAR is going to be deprecated'
         assert len(w) == 1
+        assert issubclass(w[0].category, DeprecationWarning)
+        assert str(w[0].message) == 'BAR is deprecated'
 
 ```
 
-Have a look under `./src` directory for more examples on testing.
+Have a look under [`./src`](./src) directory for more examples on testing.
 
 ## Versioning deprecations
 
@@ -185,7 +188,7 @@ Have a look under `./src` directory for more examples on testing.
 
 *TODO: Evaluate how to maintain deprecation from a developer perspective over time*
 
-## 3rd party libraries
+## Third party libraries
 
 *TODO: Evaluate existing third party libraries covering the topic deprecation*
 
