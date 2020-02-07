@@ -135,7 +135,9 @@ warn(f'The module {__name__} is deprecated.')
 
 [Full example](./src/deprecate_module_test.py)
 
+### Deprecating variables and constants on module level
 
+*TODO*
 
 ```python
 
