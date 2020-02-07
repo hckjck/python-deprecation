@@ -4,9 +4,9 @@ As soon as you are developing a library, SDK or any other piece of code which is
 
 The following document shows how to use deprecation in Python for different scenarios and parts of your code.
 
-## How to use?
+## How to use this project?
 
-Under `./src` directory you are going to find examples including tests, showing how to deprecate and test your deprecations. By running them you can explore how it would behave at runtime. By opening it in your favourite IDE, you are able to check whether your IDE is supporting you by giving any hints when using deprecated stuff. You can run all tests using pytest.
+Under `./src` directory you are going to find examples including tests, showing how to deprecate and test your deprecations. By running them via `python deprecate_<example>_test.py` you can explore how it would behave at runtime. By opening it in your favourite IDE, you are able to check whether your IDE is supporting you by giving any hints when using deprecated stuff. You can run all tests using pytest by simply `pytest .`.
 
 ## Throwing deprecation warnings
 
@@ -18,7 +18,7 @@ from warnings import warn
 
 ### Function deprecation
 
-Deprecating a function is pretty easy just by using `warn` within a method like this.
+Deprecating a function is pretty easy just by using `warn` within a function like this.
 
 ```python
 from warnings import warn
@@ -59,12 +59,12 @@ class ADeprecatedClass(object):
   
     def __init_subclass__(cls, **kwargs):
         """This throws a deprecation warning on subclassing."""
-        warn(f'{cls.__name__} will be deprecated in v1.0.0', DeprecationWarning)
+        warn(f'{cls.__name__} will be deprecated.', DeprecationWarning)
         super().__init_subclass__(**kwargs)
 
     def __init__(self, *args, **kwargs):
         """This throws a deprecation warning on initialization."""
-        warn(f'{self.__class__.__name__} will be deprecated in v1.0.0', DeprecationWarning)
+        warn(f'{self.__class__.__name__} will be deprecated.', DeprecationWarning)
         super().__init__(*args, **kwargs)
 ```
 
@@ -101,7 +101,7 @@ class AClass(object, metaclass=DeprecatedMetaclass):
 
 ### Deprecating enum values
 
-Due to the fact that enum values will be class variables of a subclass of Enum, the deprecation follows the same approach as [deprecating class variables](#Deprecating class variables) does.
+Due to the fact that enum values will be class variables of a subclass of Enum, the deprecation follows the same approach as [deprecating class variables](#Deprecating class variables) does. In contrast you have to return the `EnumMeta.__getattribute__` as a super call instead, as you are subclassing from `EnumMeta`.
 
 ```python
 from enum import EnumMeta, Enum
@@ -145,6 +145,12 @@ warn(f'The module {__name__} is deprecated.')
 
 [Full example](./src/deprecate_module_variables_test.py)
 
+## Package deprecation
+
+Package deprecation works the same way as [module deprecation](#Module deprecation), where the top level will be your `__init__.py` of the package to be deprecated.
+
+[Full example](./src/deprecate_package_test.py)
+
 ## Testing deprecations
 
 Python's [warning control](https://docs.python.org/3.5/library/warnings.html) provides the method [catch_warnings](https://docs.python.org/3.5/library/warnings.html#warnings.catch_warnings) to collect warnings within a `with` block. Setting `record=True` enables you to record the warnings which were emittied during execution of your code and check if the desired warnings where raised as expected. We won't evalutate this in depth, due to it is well documentent in Python documentation [here](https://docs.python.org/3.5/library/warnings.html#testing-warnings).
@@ -167,23 +173,21 @@ def test_a_deprecated_enum_value():
 
 Have a look under `./src` directory for more examples on testing.
 
-## Package deprecation
-
-Package deprecation works the same way as [module deprecation](#Module deprecation) where the top level will be your `__init__.py` of the package to be deprecated.
-
-[Full example](./src/deprecate_package_test.py)
-
 ## Versioning deprecations
 
-*TODO*
+*TODO: Evaluate how to deal with versioning in deprecations*
 
 ## Documenting deprecations
 
-*TODO*
+*TODO: Evaluate how to prpoerly document deprecations in code*
 
 ## Maintaining deprecations
 
-*TODO*
+*TODO: Evaluate how to maintain deprecation from a developer perspective over time*
+
+## 3rd party libraries
+
+*TODO: Evaluate existing third party libraries covering the topic deprecation*
 
 # Notes
 
@@ -197,5 +201,20 @@ Python warning control https://docs.python.org/3.5/library/warnings.html
 
 ---
 
+Libaries
 
+- https://pypi.org/project/pytest-deprecate/
+- https://pypi.org/project/deprecate/
+- https://pypi.org/project/deprecationlib/
+- https://pypi.org/project/Deprecated/
+- https://pypi.org/project/Python-Deprecated/
+- https://pypi.org/project/libdeprecation/
+- https://pypi.org/project/deprecation/
+- https://pypi.org/project/pytest-deprecate/
+
+---
+
+How this project or document could be improved to provide even more?
+
+- by providing some more python background information, how python works and meta programming...?
 
