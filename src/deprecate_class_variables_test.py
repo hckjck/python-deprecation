@@ -18,7 +18,7 @@ class DeprecatedMetaclass(type):
 
     def __getattribute__(self, item):
         if 'a_deprecated_class_variable' == item:
-            warn(f'`{item}` class variable is deprecated')
+            warn(f'`{item}` class variable is deprecated', DeprecationWarning, stacklevel=2)
 
         return type.__getattribute__(self, item)
 
@@ -33,8 +33,12 @@ def test_a_deprecated_staticmethod():
         AClass.a_class_variable
         AClass.a_deprecated_class_variable
 
-        assert str(w[0].message) == '`a_deprecated_class_variable` class variable is deprecated'
         assert len(w) == 1
+
+        w0 = w[0]
+        assert str(w0.message) == '`a_deprecated_class_variable` class variable is deprecated'
+        assert issubclass(w0.category, DeprecationWarning)
+        assert w0.filename == __file__
 
 
 if __name__ == '__main__':

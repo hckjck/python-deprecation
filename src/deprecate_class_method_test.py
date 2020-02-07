@@ -21,44 +21,55 @@ class AClass(object):
         """
         A static method which throws a DeprecationWarning with a particular reason.
         """
-        warn('This method is deprecated', DeprecationWarning)
+        warn('This method is deprecated', DeprecationWarning, stacklevel=2)
 
     @classmethod
     def a_deprecated_classmethod(cls):
         """
         A class method which throws a DeprecationWarning with a particular reason.
         """
-        warn('This method is deprecated', DeprecationWarning)
+        warn('This method is deprecated', DeprecationWarning, stacklevel=2)
 
     def a_deprecated_method(self):
         """
         A method which throws a DeprecationWarning with a particular reason.
         """
-        warn('This method is deprecated', DeprecationWarning)
+        warn('This method is deprecated', DeprecationWarning, stacklevel=2)
 
 
 def test_a_deprecated_staticmethod():
     with catch_warnings(record=True) as w:
         AClass.a_deprecated_staticmethod()
-
-        assert str(w[0].message) == 'This method is deprecated'
         assert len(w) == 1
+
+        w0 = w[0]
+        assert str(w0.message) == 'This method is deprecated'
+        assert issubclass(w0.category, DeprecationWarning)
+        assert w0.filename == __file__
 
 
 def test_a_deprecated_classmethod():
     with catch_warnings(record=True) as w:
         AClass.a_deprecated_classmethod()
 
-        assert str(w[0].message) == 'This method is deprecated'
         assert len(w) == 1
+
+        w0 = w[0]
+        assert str(w0.message) == 'This method is deprecated'
+        assert issubclass(w0.category, DeprecationWarning)
+        assert w0.filename == __file__
 
 
 def test_a_deprecated_method():
     with catch_warnings(record=True) as w:
         AClass().a_deprecated_method()
 
-        assert str(w[0].message) == 'This method is deprecated'
         assert len(w) == 1
+
+        w0 = w[0]
+        assert str(w0.message) == 'This method is deprecated'
+        assert issubclass(w0.category, DeprecationWarning)
+        assert w0.filename == __file__
 
 
 if __name__ == '__main__':

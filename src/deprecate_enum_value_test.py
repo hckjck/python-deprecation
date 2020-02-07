@@ -19,7 +19,7 @@ class ADeprecatedEnumMeta(EnumMeta):
 
     def __getattribute__(self, item):
         if item == 'BAR':
-            warn('BAR is going to be deprecated')
+            warn('BAR is going to be deprecated', DeprecationWarning, stacklevel=2)
         return EnumMeta.__getattribute__(self, item)
 
 
@@ -34,8 +34,12 @@ def test_a_deprecated_enum_value():
         assert len(w) == 0
 
         ADeprecatedEnum.BAR
-        assert str(w[0].message) == 'BAR is going to be deprecated'
         assert len(w) == 1
+
+        w0 = w[0]
+        assert str(w0.message) == 'BAR is going to be deprecated'
+        assert issubclass(w0.category, DeprecationWarning)
+        assert w0.filename == __file__
 
 
 if __name__ == '__main__':

@@ -19,9 +19,12 @@ from warnings import catch_warnings, warn
 def test_a_deprecated_variable():
     with catch_warnings(record=True) as w:
         from module import FOO
-
-        assert str(w[0].message) == 'The variable FOO is deprecated.'
         assert len(w) == 1
+
+        w0 = w[0]
+        assert str(w0.message) == 'The variable FOO is deprecated'
+        assert issubclass(w0.category, DeprecationWarning)
+        assert w0.filename == __file__
 
 
 if __name__ == '__main__':

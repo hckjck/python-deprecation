@@ -13,13 +13,15 @@ Supported IDE's:
 """
 from warnings import catch_warnings
 
-
 def test_a_deprecated_function():
     with catch_warnings(record=True) as w:
         import deprecated_package
-
-        assert str(w[0].message) == 'The package deprecated_package is deprecated.'
         assert len(w) == 1
+
+        w0 = w[0]
+        assert str(w0.message) == 'The package deprecated_package is deprecated'
+        assert issubclass(w0.category, DeprecationWarning)
+        assert w0.filename == __file__
 
 
 if __name__ == '__main__':

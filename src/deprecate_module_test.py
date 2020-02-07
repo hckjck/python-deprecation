@@ -17,9 +17,12 @@ from warnings import catch_warnings
 def test_a_deprecated_function():
     with catch_warnings(record=True) as w:
         import deprecated_module
-
-        assert str(w[0].message) == 'The module deprecated_module is deprecated.'
         assert len(w) == 1
+
+        w0 = w[0]
+        assert str(w0.message) == 'The module deprecated_module is deprecated'
+        assert issubclass(w0.category, DeprecationWarning)
+        assert w0.filename == __file__
 
 
 if __name__ == '__main__':
