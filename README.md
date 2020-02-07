@@ -10,7 +10,7 @@ Under `./src` directory you are going to find examples including tests, showing 
 
 ## Throwing deprecation warnings
 
-In order to throw warnings you want to use Pythons built in [warning control](https://docs.python.org/3/library/warnings.html).
+In order to throw warnings you want to use Python's built in [warning control](https://docs.python.org/3/library/warnings.html).
 
 ```````python
 from warnings import warn
@@ -117,7 +117,7 @@ class ADeprecatedEnumMeta(EnumMeta):
 
 class ADeprecatedEnum(Enum, metaclass=ADeprecatedEnumMeta):
     FOO = 'foo'
-    BAR = 'bar'
+    BAR = 'bar'  # deprecated
 ```
 
 [Full example](./src/deprecate_enum_value_test.py)
