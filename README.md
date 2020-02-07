@@ -152,6 +152,11 @@ warn(f'The module {__name__} is deprecated.')
 ```
 
 
+## Package deprecation
+
+Package deprecation works the same way as [module deprecation](#Module deprecation) where the top level will be your `__init__.py` of the package to be deprecated.
+
+[Full example](./src/deprecate_package_test.py)
 
 ## Versioning deprecations
 
