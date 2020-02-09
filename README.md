@@ -30,7 +30,7 @@ from warnings import warn
 def deprecated(message):
 	warn(message, DeprecationWarning, stacklevel=3)
   
-deprecated('This is deprecated')
+deprecated('This is deprecated', DeprecationWarning, stacklevel=2)
 ```
 
 Note the increased `stacklevel=3`, due to we wrapped our warn here in another function we need to increase the stacklevel in order to reffer to the caller again.
@@ -58,11 +58,11 @@ from warnings import warn
 def a_function_with_deprecated_arguments(arg1, *args, kwarg1=None, **kwargs):
     # Positional argument `arg1` is going to change its type from (int, str) to (None, str)
     if type(arg1) is int:
-        warn('`arg1` of type int is going to be deprecated.', DeprecationWarning, stacklevel=2)
+        warn('arg1 of type int is going to be deprecated', DeprecationWarning, stacklevel=2)
 
     # Keyword argument `kwarg2` is going to be dropped completely.
     if 'kwarg2' in kwargs.keys():
-        warn('kwarg2 will be deprecated.', DeprecationWarning, stacklevel=2)
+        warn('kwarg2 will be deprecated', DeprecationWarning, stacklevel=2)
 ```
 
 [Full example](./src/deprecate_function_arguments_test.py)
@@ -106,7 +106,7 @@ class DeprecatedMetaclass(type):
 
     def __getattribute__(self, item):
         if 'a_deprecated_class_variable' == item:
-            warn(f'`{item}` class variable is deprecated', DeprecationWarning, stacklevel=2)
+            warn(f'{item} class variable is deprecated', DeprecationWarning, stacklevel=2)
 
         return type.__getattribute__(self, item)
 
@@ -217,11 +217,15 @@ This way your message can be easily parsed by any other program for example a li
 
 *TODO: Evaluate how to prpoerly document deprecations*
 
+> - Pydoc: https://docs.python.org/3.7/librxary/pydoc.html
+> - Epydoc: http://epydoc.sourceforge.net/epydoc.html `@deprecated: ...`
+> - Sphynx: https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-deprecated `.. deprecated:: version`
+
 ## Maintaining deprecations
 
 *TODO: Evaluate how to maintain deprecation from a developer perspective over time*
 
-> - As a developer I would like to have an easy way to collect all deprecations of my source code as a list, so I'm able to provide this to the public beforehand
+> - As a developer I would like to have an easy way to collect all deprecations of my source code as a list, so I'm able to provide this to the public
 > - As a developer I would like to let my tests fail in case there is a deprecation in my source code which version maches the current version of my software, so I'm able to get rid of the warning and finally deprecate
 
 ## Third party libraries
@@ -235,7 +239,11 @@ This way your message can be easily parsed by any other program for example a li
 > - https://pypi.org/project/Python-Deprecated/
 > - https://pypi.org/project/libdeprecation/
 > - https://pypi.org/project/deprecation/
-> - https://pypi.org/project/pytest-deprecate/
+> - https://pypi.org/project/pytest-deprecatde/
+
+# Summary and outlook, conclusion?
+
+*TODO*
 
 # Notes
 
@@ -245,7 +253,11 @@ https://code-examples.net/en/q/926881
 
 ---
 
-Python warning control https://docs.python.org/3.5/library/warnings.html
+[Python warning control](https://docs.python.org/3.5/library/warnings.html)
+
+---
+
+[PEP 565 -- Show DeprecationWarning in  `__main__`](https://www.python.org/dev/peps/pep-0565/)
 
 ---
 
