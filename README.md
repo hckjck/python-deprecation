@@ -215,15 +215,27 @@ This way your message can be easily parsed by any other program for example a li
 
 ## Documenting deprecations
 
-*TODO: Evaluate how to prpoerly document deprecations in code*
+*TODO: Evaluate how to prpoerly document deprecations*
 
 ## Maintaining deprecations
 
 *TODO: Evaluate how to maintain deprecation from a developer perspective over time*
 
+> - As a developer I would like to have an easy way to collect all deprecations of my source code as a list, so I'm able to provide this to the public beforehand
+> - As a developer I would like to let my tests fail in case there is a deprecation in my source code which version maches the current version of my software, so I'm able to get rid of the warning and finally deprecate
+
 ## Third party libraries
 
 *TODO: Evaluate existing third party libraries covering the topic deprecation*
+
+> - https://pypi.org/project/pytest-deprecate/
+> - https://pypi.org/project/deprecate/
+> - https://pypi.org/project/deprecationlib/
+> - https://pypi.org/project/Deprecated/
+> - https://pypi.org/project/Python-Deprecated/
+> - https://pypi.org/project/libdeprecation/
+> - https://pypi.org/project/deprecation/
+> - https://pypi.org/project/pytest-deprecate/
 
 # Notes
 
@@ -237,21 +249,7 @@ Python warning control https://docs.python.org/3.5/library/warnings.html
 
 ---
 
-Libaries
-
-- https://pypi.org/project/pytest-deprecate/
-- https://pypi.org/project/deprecate/
-- https://pypi.org/project/deprecationlib/
-- https://pypi.org/project/Deprecated/
-- https://pypi.org/project/Python-Deprecated/
-- https://pypi.org/project/libdeprecation/
-- https://pypi.org/project/deprecation/
-- https://pypi.org/project/pytest-deprecate/
-
----
-
 How this project or document could be improved to provide even more?
 
 - by providing some more python background information, how python works and meta programming...?
-- Document `stacklevel=2` argument of `warnings.warn`
 
