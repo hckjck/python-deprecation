@@ -2,7 +2,7 @@
 
 As soon as you are developing a library, SDK or any other piece of code which is intended to be used by several people or software, you have to worry about how to introduce changes gracefully to your code over time.
 
-The following document shows how to use deprecation in Python for different scenarios and parts of your code. Besides of that it shows how to test deprecations and ensure its warnings will be raised when you expect them to raise. Also the the topic of versioning deprecations will be coverered, as well how to properly document them. Finally we want to evaluate how to maintain deprecations from depvelopers perspective over time efficiently. Last but not least we want to have a brief look on existing third party libraries covering the topic of deprecation.
+The following document shows how to use deprecation in Python for different scenarios and parts of your code. It shows how to test deprecations and ensure its warnings will be raised when you expect them to raise. Also the the topic of versioning deprecations will be coverered, as well how to properly document them. Finally we want to evaluate how to maintain deprecations from depvelopers perspective over time efficiently. Last but not least we want to have a brief look on existing third party libraries covering the topic of deprecation.
 
 ## How to use this project?
 
@@ -16,6 +16,8 @@ In order to throw warnings you want to use Python's built in [warning control](h
 
 ```````python
 from warnings import warn
+
+warn(f'This is deprecated', DeprecationWarning, stacklevel=2)
 ```````
 
 ### Function deprecation
@@ -26,7 +28,7 @@ Deprecating a function is pretty easy just by using `warn` within a function lik
 from warnings import warn
 
 def a_deprecated_function():
-    warn('This method is deprecated.', DeprecationWarning)
+    warn('This method is deprecated.', DeprecationWarning, stacklevel=2)
 ```
 
 [Full example](./src/deprecate_function_test.py)
@@ -41,11 +43,11 @@ from warnings import warn
 def a_function_with_deprecated_arguments(arg1, *args, kwarg1=None, **kwargs):
     # Positional argument `arg1` is going to change its type from (int, str) to (None, str)
     if type(arg1) is int:
-        warn('`arg1` of type int is going to be deprecated.', DeprecationWarning)
+        warn('`arg1` of type int is going to be deprecated.', DeprecationWarning, stacklevel=2)
 
     # Keyword argument `kwarg2` is going to be dropped completely.
     if 'kwarg2' in kwargs.keys():
-        warn('kwarg2 will be deprecated.', DeprecationWarning)
+        warn('kwarg2 will be deprecated.', DeprecationWarning, stacklevel=2)
 ```
 
 [Full example](./src/deprecate_function_arguments_test.py)
@@ -61,12 +63,12 @@ class ADeprecatedClass(object):
   
     def __init_subclass__(cls, **kwargs):
         """This throws a deprecation warning on subclassing."""
-        warn(f'{cls.__name__} will be deprecated.', DeprecationWarning)
+        warn(f'{cls.__name__} will be deprecated.', DeprecationWarning, stacklevel=2)
         super().__init_subclass__(**kwargs)
 
     def __init__(self, *args, **kwargs):
         """This throws a deprecation warning on initialization."""
-        warn(f'{self.__class__.__name__} will be deprecated.', DeprecationWarning)
+        warn(f'{self.__class__.__name__} will be deprecated.', DeprecationWarning, stacklevel=2)
         super().__init__(*args, **kwargs)
 ```
 
@@ -89,7 +91,7 @@ class DeprecatedMetaclass(type):
 
     def __getattribute__(self, item):
         if 'a_deprecated_class_variable' == item:
-            warn(f'`{item}` class variable is deprecated')
+            warn(f'`{item}` class variable is deprecated', DeprecationWarning, stacklevel=2)
 
         return type.__getattribute__(self, item)
 
@@ -113,7 +115,7 @@ class ADeprecatedEnumMeta(EnumMeta):
 
     def __getattribute__(self, item):
         if item == 'BAR':
-            warn('BAR is going to be deprecated')
+            warn('BAR is going to be deprecated', DeprecationWarning, stacklevel=2)
         return EnumMeta.__getattribute__(self, item)
 
 
@@ -132,7 +134,7 @@ In order to deprecate a entire module just place a deprecation wraning at the to
 # lib.py
 from warnings import warn
 
-warn(f'The module {__name__} is deprecated.')
+warn(f'The module {__name__} is deprecated.', DeprecationWarning, stacklevel=2)
 ```
 
 [Full example](./src/deprecate_module_test.py)
