@@ -195,7 +195,23 @@ Have a look under [`./src`](./src) directory for more examples on testing.
 
 ## Versioning deprecations
 
-*TODO: Evaluate how to deal with versioning in deprecations*
+Deprecation messages makes most sense, when you also provide information, when a particular deprecation is intended to become active. Depending on your deprecation policy and your release cycles you can have deprecation tied to a version or a particular point in time.
+
+In order to bring in this kind of information into the message itself and stay most flexible, it is recommended to follow a simple schema for a message like this `<deprecation message>; key=value`. A message can be followed by key-value pairs deprecated by semicolons. This is also a common convention when setting HTTP headers.
+
+Having set this, you can shape your messages like the following does for version info by using `version` key.
+
+```python
+warn("This is deprecated; version=1.0.0", DeprecationWarning, stacklevel=2)
+```
+
+In case you want to enrich your deprecation with a particular point in time, use the `date` key inside your message.
+
+```python
+warn("This is deprecated; date=2022-01-01", DeprecationWarning, stacklevel=2)
+```
+
+This way your message can be easily parsed by any other program for example a linter or test runner.
 
 ## Documenting deprecations
 
