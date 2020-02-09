@@ -4,6 +4,8 @@ As soon as you are developing a library, SDK or any other piece of code which is
 
 The following document shows how to use deprecation in Python for different scenarios and parts of your code. It shows how to test deprecations and ensure its warnings will be raised when you expect them to raise. Also the the topic of versioning deprecations will be coverered, as well how to properly document them. Finally we want to evaluate how to maintain deprecations from depvelopers perspective over time efficiently. Last but not least we want to have a brief look on existing third party libraries covering the topic of deprecation.
 
+[TOC]
+
 ## How to use this project?
 
 Under [`./src`](./src) directory you are going to find examples including tests, showing how to deprecate and test your deprecations. By running them via `python deprecate_<example>_test.py` you can explore how it would behave at runtime. By opening it in your favourite IDE, you are able to check whether your IDE is supporting you by giving any hints when using deprecated stuff. You can run all tests using pytest by simply `pytest .`.
