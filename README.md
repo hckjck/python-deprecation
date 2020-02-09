@@ -197,7 +197,7 @@ Have a look under [`./src`](./src) directory for more examples on testing.
 
 Deprecation messages makes most sense, when you also provide information, when a particular deprecation is intended to become active. Depending on your deprecation policy and your release cycles you can have deprecation tied to a version or a particular point in time.
 
-In order to bring in this kind of information into the message itself and stay most flexible, it is recommended to follow a simple schema for a message like this `<deprecation message>; key=value`. A message can be followed by key-value pairs deprecated by semicolons. This is also a common convention when setting HTTP headers.
+In order to bring in this kind of information into the message itself and stay most flexible, it is recommended to follow a simple schema for a message like this `<deprecation message>; key=value`. A message can be followed by key-value pairs separated by semicolons.
 
 Having set this, you can shape your messages like the following does for version info by using `version` key.
 
