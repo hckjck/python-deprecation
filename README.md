@@ -17,8 +17,23 @@ In order to throw warnings you want to use Python's built in [warning control](h
 ```````python
 from warnings import warn
 
-warn(f'This is deprecated', DeprecationWarning, stacklevel=2)
+warn('This is deprecated', DeprecationWarning, stacklevel=2)
 ```````
+
+To warn about deprecation you, need to set Python's builtin `DeprecationWarning` as category. To let the warning reffer to the caller, so you know exactly where you use deprecated stuff, you have to set `stacklevel=2`.
+
+Under this circumstances it makes sence to wrap this around a function to simplify your life.
+
+```python
+from warnings import warn
+
+def deprecated(message):
+	warn(message, DeprecationWarning, stacklevel=3)
+  
+deprecated('This is deprecated')
+```
+
+Note the increased `stacklevel=3`, due to we wrapped our warn here in another function we need to increase the stacklevel in order to reffer to the caller again.
 
 ### Function deprecation
 
