@@ -2,9 +2,7 @@
 
 As soon as you are developing a library, SDK or any other piece of code which is intended to be used by several people or software, you have to worry about how to introduce changes gracefully to your code over time.
 
-The following document shows how to use deprecation in Python for different scenarios and parts of your code. It shows how to test deprecations and ensure its warnings will be raised when you expect them to raise. Also the the topic of versioning deprecations will be coverered, as well how to properly document them. Finally we want to evaluate how to maintain deprecations from depvelopers perspective over time efficiently. Last but not least we want to have a brief look on existing third party libraries covering the topic of deprecation.
-
-[TOC]
+The following document shows how to use deprecation in Python for different scenarios and parts of your code. It shows how to test deprecations and ensure its warnings will be raised when you expect them to raise. Also the the topic of versioning deprecations will be coverered, as well how to properly document them. Finally we want to evaluate how to maintain deprecations from depvelopers perspective over time efficiently. Last but not least we want to have a brief look on existing third party libraries covering the topic of deprecation. 
 
 ## How to use this project?
 
@@ -32,7 +30,7 @@ from warnings import warn
 def deprecated(message):
 	warn(message, DeprecationWarning, stacklevel=3)
   
-deprecated('This is deprecated', DeprecationWarning, stacklevel=2)
+deprecated('This is deprecated')
 ```
 
 Note the increased `stacklevel=3`, due to we wrapped our warn here in another function we need to increase the stacklevel in order to reffer to the caller again.
