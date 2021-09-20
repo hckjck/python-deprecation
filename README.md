@@ -4,7 +4,7 @@ As soon as you are developing a library, SDK or any other piece of code, which i
 
 > How to introduce changes gracefully to your code over time?
 
-The following document shows how to use deprecation in Python for different scenarios and parts of your code using Python standard libraries.
+The following document shows how to use deprecation in Python for different scenarios and parts of your code using Python standard library.
 
 It shows how to test deprecations and ensure warnings will be raised when you expect them to raise. 
 
