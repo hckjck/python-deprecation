@@ -155,16 +155,6 @@ warn(f'The module {__name__} is deprecated.', DeprecationWarning, stacklevel=2)
 
 [Full example](./src/deprecate_module_test.py)
 
-#### Deprecating variables and constants on module level
-
-*TODO*
-
-```python
-
-```
-
-[Full example](./src/deprecate_module_variables_test.py)
-
 ### Package deprecation
 
 Package deprecation works the same way as [module deprecation](#Module deprecation), where the top level will be your `__init__.py` of the package to be deprecated.
