@@ -1,18 +1,32 @@
 # Python deprecation
 
-As soon as you are developing a library, SDK or any other piece of code which is intended to be used by several people or software, you have to worry about how to introduce changes gracefully to your code over time.
+As soon as you are developing a library, SDK or any other piece of code, which is intended to be used by several people or software, you should think about _deprecation_.
 
-The following document shows how to use deprecation in Python for different scenarios and parts of your code. It shows how to test deprecations and ensure its warnings will be raised when you expect them to raise. Also the the topic of versioning deprecations will be coverered, as well how to properly document them. Finally we want to evaluate how to maintain deprecations from depvelopers perspective over time efficiently. Last but not least we want to have a brief look on existing third party libraries covering the topic of deprecation. 
+> How to introduce changes gracefully to your code over time?
+
+The following document shows how to use deprecation in Python for different scenarios and parts of your code using Python standard libraries.
+
+It shows how to test deprecations and ensure warnings will be raised when you expect them to raise. 
+
+Also, the topic of versioning deprecations will be covered, as well how to properly document them. 
+
+Finally, we want to evaluate how to maintain deprecations from the point of view of a developer over time efficiently.
 
 ## How to use this project?
 
-Under [`./src`](./src) directory you are going to find examples including tests, showing how to deprecate and test your deprecations. By running them via `python deprecate_<example>_test.py` you can explore how it would behave at runtime. By opening it in your favourite IDE, you are able to check whether your IDE is supporting you by giving any hints when using deprecated stuff. You can run all tests using pytest by simply `pytest .`.
+Under [`./src`](./src) directory you will find examples including tests, showing how to deprecate certain parts of your code and how to test them accordingly. 
+
+Running `python deprecate_<example>_test.py` shows how a particular deprecation behaves at runtime. 
+
+Open in your favorite IDE in order to check, if it is supporting you by giving hints, in case of using deprecated parts of your code.
+
+Run all test using [pytest](https://docs.pytest.org) simply by `pytest`.
 
 ## Throwing deprecation warnings
 
-The following section shows how to use deprecation warning in python in different parts of your code.
+The following section shows, how to use deprecation warnings in different parts of your code.
 
-In order to throw warnings you want to use Python's built in [warning control](https://docs.python.org/3/library/warnings.html).
+In order to throw warnings, you want to use Python's built in [warning control](https://docs.python.org/3/library/warnings.html).
 
 ```````python
 from warnings import warn
@@ -20,20 +34,7 @@ from warnings import warn
 warn('This is deprecated', DeprecationWarning, stacklevel=2)
 ```````
 
-To warn about deprecation you, need to set Python's builtin `DeprecationWarning` as category. To let the warning reffer to the caller, so you know exactly where you use deprecated stuff, you have to set `stacklevel=2`.
-
-Under this circumstances it makes sence to wrap this around a function to simplify your life.
-
-```python
-from warnings import warn
-
-def deprecated(message):
-	warn(message, DeprecationWarning, stacklevel=3)
-  
-deprecated('This is deprecated')
-```
-
-Note the increased `stacklevel=3`, due to we wrapped our warn here in another function we need to increase the stacklevel in order to reffer to the caller again.
+To warn about deprecation, you need to set Python's builtin `DeprecationWarning` as category. To let the warning refer to the caller, so you know exactly where you use deprecated code, you have to set `stacklevel=2`.
 
 ### Function deprecation
 
@@ -195,23 +196,23 @@ Have a look under [`./src`](./src) directory for more examples on testing.
 
 ## Versioning deprecations
 
-Deprecation messages makes most sense, when you also provide information, when a particular deprecation is intended to become active. Depending on your deprecation policy and your release cycles you can have deprecation tied to a version or a particular point in time.
+Deprecation messages make most sense, when they also provide information, when a particular deprecation is intended to become active. Depending on your deprecation policy and your release cycles you can have deprecation tied to a version or a particular point in time.
 
-In order to bring in this kind of information into the message itself and stay most flexible, it is recommended to follow a simple schema for a message like this `<deprecation message>; key=value`. A message can be followed by key-value pairs separated by semicolons.
-
-Having set this, you can shape your messages like the following does for version info by using `version` key.
+Decide on a message format, for example `message; key=value`. This way, adding meta information is straight forward and can be parsed by other tools easily as well.
 
 ```python
+from warnings import warn
+
 warn("This is deprecated; version=1.0.0", DeprecationWarning, stacklevel=2)
 ```
 
-In case you want to enrich your deprecation with a particular point in time, use the `date` key inside your message.
+Use common keywords like `version` or `date` for indicating changes in a particular point in time.
 
 ```python
+from warnings import warn
+
 warn("This is deprecated; date=2022-01-01", DeprecationWarning, stacklevel=2)
 ```
-
-This way your message can be easily parsed by any other program for example a linter or test runner.
 
 ## Documenting deprecations
 
