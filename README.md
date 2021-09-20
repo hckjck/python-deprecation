@@ -70,7 +70,7 @@ def a_function_with_deprecated_arguments(arg1, *args, kwarg1=None, **kwargs):
 
 ### Class deprecation
 
-When deprecating classes you have to consider two seperate use cases. Instantiating an object of a deprecated class can throw a deprecation warning by overriding the `__init__` method. In order to throw a warning on subclassing from a deprected method, you have to override the `__init_sublcall__` method instead.
+When deprecating classes you have to consider two separate use cases. Instantiating an object of a deprecated class can throw a deprecation warning by overriding the `__init__` method. In order to throw a warning on subclassing from a deprecated method, you have to override the `__init_sublcall__` method instead.
 
 ```python
 from warnings import warn
@@ -92,13 +92,13 @@ class ADeprecatedClass(object):
 
 #### Deprecating a class method
 
-Class method deprecation basicaly follows the same rules as [function deprecation](#function deprecation).
+Class method deprecation basically follows the same rules as [function deprecation](#function-deprecation).
 
 [Full example](./src/deprecate_class_method_test.py)
 
 #### Deprecating class variables
 
-In order to deperecate class variables, you need to hook into `__getattribute__` method of objects metaclass.
+In order to deprecate class variables, you need to hook into `__getattribute__` method of objects metaclass.
 
 ```python
 from warnings import warn
@@ -121,7 +121,7 @@ class AClass(object, metaclass=DeprecatedMetaclass):
 
 #### Deprecating enum values
 
-Due to the fact that enum values will be class variables of a subclass of Enum, the deprecation follows the same approach as [deprecating class variables](#Deprecating class variables) does. In contrast you have to return the `EnumMeta.__getattribute__` as a super call instead, as you are subclassing from `EnumMeta`.
+Due to the fact that enum values will be class variables of a subclass of Enum, the deprecation follows the same approach as [deprecating class variables](#deprecating-class-variables) does. In contrast, you have to return the `EnumMeta.__getattribute__` as a super call instead, as you are subclassing from `EnumMeta`.
 
 ```python
 from enum import EnumMeta, Enum
@@ -144,7 +144,7 @@ class ADeprecatedEnum(Enum, metaclass=ADeprecatedEnumMeta):
 
 ### Module deprecation
 
-In order to deprecate a entire module just place a deprecation wraning at the top level of that module.
+In order to deprecate an entire module just place a deprecation warning at the top level of that module.
 
 ```python
 # lib.py
@@ -157,13 +157,13 @@ warn(f'The module {__name__} is deprecated.', DeprecationWarning, stacklevel=2)
 
 ### Package deprecation
 
-Package deprecation works the same way as [module deprecation](#Module deprecation), where the top level will be your `__init__.py` of the package to be deprecated.
+Package deprecation works the same way as [module deprecation](#module-deprecation), where the top level will be your `__init__.py` of the package to be deprecated.
 
 [Full example](./src/deprecate_package_test.py)
 
 ## Testing deprecations
 
-Python's [warning control](https://docs.python.org/3.5/library/warnings.html) provides a method called [catch_warnings](https://docs.python.org/3.5/library/warnings.html#warnings.catch_warnings) to collect warnings within a `with` block. Setting `record=True` enables you to record the warnings which were emittied during execution of your code and check if the desired warnings where raised as expected. We won't evalutate this in depth, due to it is well documentent in Python documentation [here](https://docs.python.org/3.5/library/warnings.html#testing-warnings).
+Python's [warning control](https://docs.python.org/3/library/warnings.html) provides a method called [catch_warnings](https://docs.python.org/3/library/warnings.html#warnings.catch_warnings) to collect warnings within a `with` block. Setting `record=True` enables you to record the warnings which were emitted during execution of your code and check if the desired warnings where raised as expected. We won't evaluate this in depth, due to it is well documented in Python documentation [here](https://docs.python.org/3/library/warnings.html#testing-warnings).
 
 ```python
 from warnings import catch_warnings
@@ -206,18 +206,18 @@ warn("This is deprecated; date=2022-01-01", DeprecationWarning, stacklevel=2)
 
 ## Documenting deprecations
 
-*TODO: Evaluate how to prpoerly document deprecations*
+*TODO: Evaluate how to properly document deprecations*
 
 > - Pydoc: https://docs.python.org/3.7/librxary/pydoc.html
 > - Epydoc: http://epydoc.sourceforge.net/epydoc.html `@deprecated: ...`
-> - Sphynx: https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-deprecated `.. deprecated:: version`
+> - Sphinx: https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-deprecated `.. deprecated:: version`
 
 ## Maintaining deprecations
 
 *TODO: Evaluate how to maintain deprecation from a developer perspective over time*
 
 > - As a developer I would like to have an easy way to collect all deprecations of my source code as a list, so I'm able to provide this to the public
-> - As a developer I would like to let my tests fail in case there is a deprecation in my source code which version maches the current version of my software, so I'm able to get rid of the warning and finally deprecate
+> - As a developer I would like to let my tests fail in case there is a deprecation in my source code which version matches the current version of my software, so I'm able to get rid of the warning and finally deprecate
 
 ## Third party libraries
 
@@ -232,27 +232,12 @@ warn("This is deprecated; date=2022-01-01", DeprecationWarning, stacklevel=2)
 > - https://pypi.org/project/deprecation/
 > - https://pypi.org/project/pytest-deprecatde/
 
-# Summary and outlook, conclusion?
+# Reference
 
-*TODO*
+[deprecation - Python warnings.warn() vs. logging.warning()](https://code-examples.net/en/q/926881)
 
-# Notes
+[Python warning control](https://docs.python.org/3/library/warnings.html)
 
-Python provides a built-in integration between the `logging` module and the `warnings` module to let you do this; just call [`logging.captureWarnings(True)`](https://docs.python.org/library/logging.html#logging.captureWarnings) at the start of your script and all warnings emitted by the `warnings` module will automatically be logged at level `WARNING`.
+[PEP 565 -- Show DeprecationWarning in  \_\_main\_\_](https://www.python.org/dev/peps/pep-0565/)
 
-https://code-examples.net/en/q/926881
-
----
-
-[Python warning control](https://docs.python.org/3.5/library/warnings.html)
-
----
-
-[PEP 565 -- Show DeprecationWarning in  `__main__`](https://www.python.org/dev/peps/pep-0565/)
-
----
-
-How this project or document could be improved to provide even more?
-
-- by providing some more python background information, how python works and meta programming...?
-
+[logging.captureWarnings](https://docs.python.org/library/logging.html#logging.captureWarnings)
